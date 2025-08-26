@@ -1,5 +1,6 @@
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+//import { signOut } from 'firebase/auth';
+//import { auth } from '../firebase';
+
 
 /**
  * A header component that displays the logged-in user's email and a sign-out button.

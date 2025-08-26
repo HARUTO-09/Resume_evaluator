@@ -1,3 +1,4 @@
+/* global __initial_auth_token */
 import { useState, useEffect } from 'react';
 import {
   onAuthStateChanged,
@@ -7,19 +8,15 @@ import {
 } from 'firebase/auth';
 
 import { auth } from './firebase';
-import Login from './components/auth/Login';
-import SignUp from './components/auth/SignUp';
-import Dashboard from './components/dashboard/Dashboard';
+import Login from './components/auth/Login.js'; 
+import SignUp from './components/auth/SignUp.js'; 
+import Dashboard from './components/dashboard/Dashboard.js'; 
 
-/**
- * The main application component. It handles the user's authentication state and renders the appropriate view.
- */
 function App() {
   const [user, setUser] = useState(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
 
-  // Handle user sign-out
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -30,9 +27,9 @@ function App() {
   };
 
   useEffect(() => {
-    // This is a mandatory check for the custom token provided by the canvas environment
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-    
+    const initialAuthToken =
+      typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
     const setupAuth = async () => {
       try {
         if (initialAuthToken) {
@@ -42,7 +39,6 @@ function App() {
         }
       } catch (e) {
         console.error('Error with initial authentication:', e);
-        // Fallback to anonymous sign-in if custom token fails
         signInAnonymously(auth);
       }
     };
@@ -53,7 +49,6 @@ function App() {
     });
 
     setupAuth();
-
     return () => unsubscribe();
   }, []);
 
